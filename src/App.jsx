@@ -14,9 +14,7 @@ const App = () => {
       <Menu />
       <div className="content-wrapper flex items-center justify-center  ">
         <div className="grid  grid-cols-1">
-          <div className="grid justify-end">
             <AddingProductSection />
-          </div>
           <ProductLists products={products} />
         </div>
       </div>
