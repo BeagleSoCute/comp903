@@ -4,7 +4,7 @@
 
 
 .app{
-    height: calc(100vh - 30px);
+    /* height: calc(100vh - 30px); */
     /* background-color: red; */
 }
 
@@ -14,7 +14,7 @@
 }
 
 .content-wrapper  {
-    height: calc(100vh - 84px);
+    /* height: calc(100vh - 84px); */
 }
 
 .product-details span{

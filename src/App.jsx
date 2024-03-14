@@ -34,9 +34,9 @@ const App = () => {
   return (
     <div className="app">
       <Menu />
-      <div className="content-wrapper flex items-center justify-center  ">
+      <div className="content-wrapper flex items-center justify-center">
         <div className="grid grid-cols-1">
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mt-3 mb-6">
           <Button onClick={() => setCurrentTab("productPage")}>Product page</Button>
           <Button onClick={() => setCurrentTab("historyPage")}>History page</Button>
         </div>
