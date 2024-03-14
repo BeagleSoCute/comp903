@@ -1,7 +1,8 @@
 import React from "react";
+import Button from "../share-components/Button"
 
 const DeleteProductButton = () => {
-  return <div></div>;
+  return <Button>Delete</Button>;
 };
 
 export default DeleteProductButton;

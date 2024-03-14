@@ -1,7 +1,7 @@
 import React from "react";
 
-const ShowTotalPrice = () => {
-  return <div></div>;
+const ShowTotalPrice = ({total}) => {
+  return <div>Total price : {total}</div>;
 };
 
 export default ShowTotalPrice;
