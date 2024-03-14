@@ -11,7 +11,7 @@ const AddingProductSection = ({ onAdd, onRandomAdd }) => {
   const handleSubmit = () => {
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
-    const price = priceRef.current.value;
+    const price = parseInt(priceRef.current.value);
     onAdd({ name, description, price, id: generateId() });
     setDisplayForm(false);
   };

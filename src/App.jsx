@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Menu from "./child-components/Menu";
 import ProductLists from "./child-components/ProductLists";
 import AddingProductSection from "./child-components/AddingProductSection";
@@ -15,42 +15,73 @@ const productsEx = [
 ];
 const App = () => {
   const [products, setProducts] = useState([]);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [defaultProduct, setDefaultProducts] = useState([]);
+  const [sortOrder, setSortOrder] = useState(null);
   const [currentTab, setCurrentTab] = useState("productPage");
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const handleTotalPrice = () => {
+    console.log(products)
+    let sum = 0;
+    for (let i = 0; i <= products.length; i++) {
+      if(products[i]){
+        const result = (products[i].price + sum);
+        sum = result;
+      }
+ 
+    }
+    console.log("products", products);
+    console.log("sum is", sum);
+    setTotalPrice(sum);
+  };
+
+  useEffect(() => {
+    console.log("useEffect called");
+      handleTotalPrice();
+    
+  }, [products]);
 
   const generateProducts = () => {
     const thisProducts = [];
     for (let i = 0; i < 1000; i++) {
       thisProducts.push(generateProduct());
     }
-    return setProducts([...products, ...thisProducts]);
+    setDefaultProducts([...products, ...thisProducts])
+     setProducts([...products, ...thisProducts]);
   };
 
   const handleAddProduct = (newProduct) => {
-    return setProducts([newProduct, ...products]);
+    setDefaultProducts([newProduct, ...products])
+     setProducts([newProduct, ...products]);
   };
 
-  const handleDeleteProduct = (id) => {//Might test heavy computational functionh (Hypo 1)
+  const handleDeleteProduct = (id) => {
+    //Might test heavy computational functionh (Hypo 1)
     const removedProduct = products.filter((item) => item.id !== id);
     setProducts(removedProduct);
   };
-  const handleSort = () => {
+  const handleSort = (type) => {
     const sortedData = [...products].sort((a, b) => {
       const nameA = a.name.toUpperCase();
       const nameB = b.name.toUpperCase();
-      if (sortOrder === "asc") {
+      if (type === "asc") {
         return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
       } else {
         return nameA > nameB ? -1 : nameA < nameB ? 1 : 0;
       }
     });
+    setSortOrder(type);
     setProducts(sortedData);
   };
 
   const handleDeleteAllProduct = () => {
     setProducts([]);
   };
-  const onClearSort = () => {};
+
+  const handleClearSort = () => {
+    setSortOrder(null)
+    setProducts(defaultProduct)
+  }
   return (
     <div className="app">
       <Menu />
@@ -70,9 +101,9 @@ const App = () => {
                 <SortingSection
                   sortOrder={sortOrder}
                   onChange={handleSort}
-                  onClear={onClearSort}
+                  onClear={handleClearSort}
                 />
-                <ShowTotalPrice />
+                <ShowTotalPrice totalPrice={totalPrice} />
               </div>
               <AddingProductSection
                 onAdd={handleAddProduct}

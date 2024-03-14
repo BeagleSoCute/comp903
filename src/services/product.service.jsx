@@ -5,16 +5,23 @@ export const generateId = () => {
   
   // Function to generate a random product name
   const generateName = () => {
-    const adjectives = ['Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange', 'Pink'];
-    const nouns = ['Car', 'Book', 'Chair', 'Table', 'Computer', 'Phone', 'Shirt'];
+    const adjectives = ['Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange', 'Pink', 'Sunny', 'Fierce', 'Mysterious'];
+    const nouns = ['Car', 'Book', 'Chair', 'Table', 'Computer', 'Phone', 'Shirt', 'Mountain', 'Forest', 'Ocean'];
+    const landings = ['Co', 'Corp', 'Industries', 'Ltd', 'Technologies', 'Enterprises', 'Incorporated', 'Group', 'Solutions'];
+    
     const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
-    return `${randomAdjective} ${randomNoun}`;
-  };
+    const randomLanding = landings[Math.floor(Math.random() * landings.length)];
+    
+    // Generate a random string
+    const randomString = Math.random().toString(36).substring(7); // Random string of 6 characters
+    
+    return `${randomString} - ${randomAdjective} ${randomNoun} ${randomLanding}`;
+};
   
   // Function to generate a random price
   const generatePrice = () => {
-    return (Math.random() * 1000).toFixed(2); // Generate a random price between 0 and 1000 with two decimal places
+    return parseInt((Math.random() * 1000).toFixed(2)); 
   };
   
   // Function to generate a random product description

@@ -25,8 +25,7 @@ const SortingSection = ({ sortOrder, onChange, onClear }) => {
         />
         <label htmlFor="desc">Descending</label>
       </div>
-
-      <Button onClick={onClear}>Clear</Button>
+      <Button onClick={() => onClear()}>Clear</Button>
     </div>
   );
 };
