@@ -1,7 +1,7 @@
 import React from "react";
 import DeleteProductButton from "../great-grandchild-components/DeleteProductButton";
 
-const ProductDetails = ({ details }) => {
+const ProductDetails = ({ details, onDelete }) => {
   return (
     <div className="product-details">
       <div className="flex gap-10 items-center">
@@ -11,7 +11,7 @@ const ProductDetails = ({ details }) => {
         {details.name} <span> Description:</span>
         {details.description} <span>Price:</span>
         {details.price}
-        <DeleteProductButton/>
+        <DeleteProductButton  onDelete={() => onDelete(details.id)}/>
       </div>
     </div>
   );

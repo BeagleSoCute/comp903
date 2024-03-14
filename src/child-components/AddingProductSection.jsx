@@ -1,21 +1,20 @@
 import React, { useRef, useState } from "react";
 import Button from "../share-components/Button";
+import { generateId } from "../services/product.service";
 
-const AddingProductSection = () => {
+const AddingProductSection = ({ onAdd, onRandomAdd }) => {
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
   const priceRef = useRef(null);
+  const [displayForm, setDisplayForm] = useState(false);
 
   const handleSubmit = () => {
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
     const price = priceRef.current.value;
-    console.log("Product Name:", name);
-    console.log("Product Description:", description);
-    console.log("Product Price:", price);
+    onAdd({ name, description, price, id: generateId() });
+    setDisplayForm(false);
   };
-
-  const [displayForm, setDisplayForm] = useState(false);
   return (
     <div>
       <div className="grid mb-2 justify-end">
@@ -25,7 +24,9 @@ const AddingProductSection = () => {
               <Button onClick={() => setDisplayForm(true)} className="p-2">
                 Add Product
               </Button>
-              <Button className="p-2">Generate 1,000 products</Button>
+              <Button onClick={() => onRandomAdd()} className="p-2">
+                Generate 1,000 products
+              </Button>
             </>
           )}
         </div>
@@ -63,14 +64,17 @@ const AddingProductSection = () => {
             </div>
           </form>
           <div className="flex gap-5">
-          <Button onClick={() => setDisplayForm(false)} className="p-2">
-            Cancel
-          </Button>
-          <Button type='submit' onClick={() => handleSubmit()} className="p-2">
-            Submit
-          </Button>
-            </div>
-       
+            <Button onClick={() => setDisplayForm(false)} className="p-2">
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              onClick={() => handleSubmit()}
+              className="p-2"
+            >
+              Submit
+            </Button>
+          </div>
         </div>
       ) : (
         ""

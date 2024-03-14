@@ -2,25 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.app{
-    /* height: calc(100vh - 30px); */
-    /* background-color: red; */
+.app {
+  /* height: calc(100vh - 30px); */
+  /* background-color: red; */
+  width: 100%;
 }
 
-.menu{
-    background-color: rgb(77, 77, 77);
-    color:white;
+.menu {
+  background-color: rgb(77, 77, 77);
+  color: white;
 }
 
-.content-wrapper  {
-    /* height: calc(100vh - 84px); */
+.content-wrapper {
+  /* height: calc(100vh - 84px); */
+  width: 100%;
+  padding: 40px;
 }
 
-.product-details span{
-    font-weight: bold;
+.product-details span {
+  font-weight: bold;
 }
 
-.font-title{
-    font-size: 24px;
+.font-title {
+  font-size: 24px;
+}
+
+.product-lists {
+  max-height: 500px;
+  overflow: auto;
+  width: 100%;
 }
