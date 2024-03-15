@@ -1,11 +1,11 @@
 import React from "react";
 import Button from "../share-components/Button";
 
-const ControlHistoryLogsAction = ({ onClick }) => {
+const ControlHistoryLogsAction = ({ onStart, onStop }) => {
   return (
     <div className="flex gap-x-2">
-      <Button onClick={() => onClick("start")}>Start</Button>
-      <Button onClick={() => onClick("stop")}>Stop</Button>
+      <Button onClick={() => onStart()}>Start</Button>
+      <Button onClick={() => onStop()}>Stop</Button>
     </div>
   );
 };

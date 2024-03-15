@@ -7,38 +7,31 @@ import ShowTotalPrice from "./child-components/ShowTotalPrice";
 import Button from "./share-components/Button";
 import PurchaseHistoryLogs from "./child-components/PurchaseHistoryLogs";
 import { generateProduct } from "./services/product.service";
-const productsEx = [
-  { id: 0, name: "Product1", price: 5, description: "sadsd" },
-  { id: 1, name: "Product2", price: 2, description: "gasdsadasad" },
-  { id: 2, name: "Product3", price: 56, description: "wfawxsx" },
-  { id: 3, name: "Product4", price: 12, description: "sadsa" },
-];
+
 const App = () => {
   const [products, setProducts] = useState([]);
   const [defaultProduct, setDefaultProducts] = useState([]);
   const [sortOrder, setSortOrder] = useState(null);
   const [currentTab, setCurrentTab] = useState("productPage");
   const [totalPrice, setTotalPrice] = useState(0);
+  const [historyLogs, setHistoryLogs] = useState([]);
+  const [intervalId, setIntervalId] = useState(null);
 
   const handleTotalPrice = () => {
-    console.log(products)
+    console.log(products);
     let sum = 0;
     for (let i = 0; i <= products.length; i++) {
-      if(products[i]){
-        const result = (products[i].price + sum);
+      if (products[i]) {
+        const result = products[i].price + sum;
         sum = result;
       }
- 
     }
-    console.log("products", products);
-    console.log("sum is", sum);
     setTotalPrice(sum);
   };
 
   useEffect(() => {
-    console.log("useEffect called");
-      handleTotalPrice();
-    
+    handleTotalPrice();
+    // eslint-disable-next-line
   }, [products]);
 
   const generateProducts = () => {
@@ -46,13 +39,26 @@ const App = () => {
     for (let i = 0; i < 1000; i++) {
       thisProducts.push(generateProduct());
     }
-    setDefaultProducts([...products, ...thisProducts])
-     setProducts([...products, ...thisProducts]);
+    setDefaultProducts([...products, ...thisProducts]);
+    setProducts([...products, ...thisProducts]);
+  };
+
+  const startGeneratingHistoryLogs = () => {
+    const id = setInterval(() => {
+      const newProduct = generateProduct();
+      setHistoryLogs((prevProducts) => [...prevProducts, newProduct]);
+    }, 1000);
+    setIntervalId(id);
+  };
+
+  const stopGeneratingHistoryLogs = () => {
+    clearInterval(intervalId);
+    setIntervalId(null);
   };
 
   const handleAddProduct = (newProduct) => {
-    setDefaultProducts([newProduct, ...products])
-     setProducts([newProduct, ...products]);
+    setDefaultProducts([newProduct, ...products]);
+    setProducts([newProduct, ...products]);
   };
 
   const handleDeleteProduct = (id) => {
@@ -79,9 +85,9 @@ const App = () => {
   };
 
   const handleClearSort = () => {
-    setSortOrder(null)
-    setProducts(defaultProduct)
-  }
+    setSortOrder(null);
+    setProducts(defaultProduct);
+  };
   return (
     <div className="app">
       <Menu />
@@ -116,7 +122,11 @@ const App = () => {
               />
             </>
           ) : (
-            <PurchaseHistoryLogs logs={products} />
+            <PurchaseHistoryLogs
+              logs={historyLogs}
+              onStart={startGeneratingHistoryLogs}
+              onStop={stopGeneratingHistoryLogs}
+            />
           )}
         </div>
       </div>
