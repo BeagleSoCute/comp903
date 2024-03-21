@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import Menu from "./child-components/Menu";
 import ProductLists from "./child-components/ProductLists";
 import AddingProductSection from "./child-components/AddingProductSection";
@@ -13,71 +13,85 @@ const App = () => {
   const [defaultProduct, setDefaultProducts] = useState([]);
   const [sortOrder, setSortOrder] = useState(null);
   const [currentTab, setCurrentTab] = useState("productPage");
-  const [totalPrice, setTotalPrice] = useState(0);
   const [historyLogs, setHistoryLogs] = useState([]);
   const [intervalId, setIntervalId] = useState(null);
+  const [displayForm, setDisplayForm] = useState(false);
 
-  const handleTotalPrice = () => {
-    console.log(products);
+  //-----------------SECTION Heavy computational functions-----------------
+  const generateProducts = useCallback(() => {
+    const thisProducts = [];
+    for (let i = 0; i < 40000; i++) {
+      thisProducts.push(generateProduct());
+    }
+    setDefaultProducts([...products, ...thisProducts]);
+    setProducts([...products, ...thisProducts]);
+  }, [products]);
+  const handleSort = (type) => {
+    // const sortedData = [...products].sort((a, b) => {
+    //   const nameA = a.name.toUpperCase();
+    //   const nameB = b.name.toUpperCase();
+    //   if (type === "asc") {
+    //     return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+    //   } else {
+    //     return nameA > nameB ? -1 : nameA < nameB ? 1 : 0;
+    //   }
+    // })
+    setSortOrder(type);
+    // setProducts(sortedData);
+  };
+
+  const handleTotalPrice = useCallback(() => {
     let sum = 0;
+    let random = 0;
+    // Introduce a deliberate delay
+    for (let i = 0; i <= 100000000; i++) {
+      random += Math.random();
+    }
     for (let i = 0; i <= products.length; i++) {
       if (products[i]) {
         const result = products[i].price + sum;
         sum = result;
       }
     }
-    setTotalPrice(sum);
-  };
-
-  useEffect(() => {
-    handleTotalPrice();
-    // eslint-disable-next-line
+    return sum;
   }, [products]);
 
-  const generateProducts = () => {
-    const thisProducts = [];
-    for (let i = 0; i < 1000; i++) {
-      thisProducts.push(generateProduct());
+  const handleSortedProducts = () => {
+    // Simulate an expensive computation
+    let expensiveComputation = 0;
+    for (let i = 0; i < 100000000; i++) {
+      expensiveComputation += Math.random();
     }
-    setDefaultProducts([...products, ...thisProducts]);
-    setProducts([...products, ...thisProducts]);
+
+    if (!sortOrder) return products;
+    return [...products].sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      return sortOrder === "asc"
+        ? nameA < nameB
+          ? -1
+          : 1
+        : nameA > nameB
+        ? -1
+        : 1;
+    });
   };
 
-  const startGeneratingHistoryLogs = () => {
-    const id = setInterval(() => {
-      const newProduct = generateProduct();
-      setHistoryLogs((prevProducts) => [...prevProducts, newProduct]);
-    }, 1000);
-    setIntervalId(id);
-  };
+  // const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
+  const sortedProducts = handleSortedProducts()
 
-  const stopGeneratingHistoryLogs = () => {
-    clearInterval(intervalId);
-    setIntervalId(null);
-  };
-
-  const handleAddProduct = (newProduct) => {
-    setDefaultProducts([newProduct, ...products]);
-    setProducts([newProduct, ...products]);
-  };
-
+  // const totalPrice = useMemo(() =>handleTotalPrice(),[products])
+  const totalPrice = handleTotalPrice();
   const handleDeleteProduct = (id) => {
-    //Might test heavy computational functionh (Hypo 1)
+    //Delete when products over 10,000
     const removedProduct = products.filter((item) => item.id !== id);
     setProducts(removedProduct);
   };
-  const handleSort = (type) => {
-    const sortedData = [...products].sort((a, b) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
-      if (type === "asc") {
-        return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-      } else {
-        return nameA > nameB ? -1 : nameA < nameB ? 1 : 0;
-      }
-    });
-    setSortOrder(type);
-    setProducts(sortedData);
+  //----------------------------------------------------END----------------------------------------------------
+  //-----------------SECTION Light computational functions-----------------
+  const handleAddProduct = (newProduct) => {
+    setDefaultProducts([newProduct, ...products]);
+    setProducts([newProduct, ...products]);
   };
 
   const handleDeleteAllProduct = () => {
@@ -88,6 +102,23 @@ const App = () => {
     setSortOrder(null);
     setProducts(defaultProduct);
   };
+  const handleOpenForm = (value) => {
+    setDisplayForm(value);
+  };
+  //----------------------------------------------------END----------------------------------------------------
+  //-----------------SECTION Frequent updates states-----------------
+  const startGeneratingHistoryLogs = () => {
+    const id = setInterval(() => {
+      const newProduct = generateProduct();
+      setHistoryLogs((prevProducts) => [...prevProducts, newProduct]);
+    }, 1000);
+    setIntervalId(id);
+  };
+  const stopGeneratingHistoryLogs = () => {
+    clearInterval(intervalId);
+    setIntervalId(null);
+  };
+  //----------------------------------------------------END----------------------------------------------------
   return (
     <div className="app">
       <Menu />
@@ -109,14 +140,17 @@ const App = () => {
                   onChange={handleSort}
                   onClear={handleClearSort}
                 />
+                <p>The number of products: {products.length}</p>
                 <ShowTotalPrice totalPrice={totalPrice} />
               </div>
               <AddingProductSection
+                displayForm={displayForm}
                 onAdd={handleAddProduct}
                 onRandomAdd={generateProducts}
+                onDisplayForm={handleOpenForm}
               />
               <ProductLists
-                products={products}
+                products={sortedProducts}
                 onDelete={handleDeleteProduct}
                 onDeleteAll={handleDeleteAllProduct}
               />

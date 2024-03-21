@@ -1,19 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import Button from "../share-components/Button";
 import { generateId } from "../services/product.service";
 
-const AddingProductSection = ({ onAdd, onRandomAdd }) => {
+const AddingProductSection = ({ displayForm, onAdd, onRandomAdd,onDisplayForm }) => {
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
   const priceRef = useRef(null);
-  const [displayForm, setDisplayForm] = useState(false);
 
   const handleSubmit = () => {
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
     const price = parseInt(priceRef.current.value);
     onAdd({ name, description, price, id: generateId() });
-    setDisplayForm(false);
+    onDisplayForm(false);
   };
   return (
     <div>
@@ -21,11 +20,11 @@ const AddingProductSection = ({ onAdd, onRandomAdd }) => {
         <div className=" grid grid-cols-2 gap-5 ">
           {!displayForm && (
             <>
-              <Button onClick={() => setDisplayForm(true)} className="p-2">
+              <Button onClick={() => onDisplayForm(true)} className="p-2">
                 Add Product
               </Button>
               <Button onClick={() => onRandomAdd()} className="p-2">
-                Generate 1,000 products
+                Generate 10,000 products
               </Button>
             </>
           )}
@@ -64,7 +63,7 @@ const AddingProductSection = ({ onAdd, onRandomAdd }) => {
             </div>
           </form>
           <div className="flex gap-5">
-            <Button onClick={() => setDisplayForm(false)} className="p-2">
+            <Button onClick={() => onDisplayForm(false)} className="p-2">
               Cancel
             </Button>
             <Button
