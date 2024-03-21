@@ -7,6 +7,7 @@ import ShowTotalPrice from "./child-components/ShowTotalPrice";
 import Button from "./share-components/Button";
 import PurchaseHistoryLogs from "./child-components/PurchaseHistoryLogs";
 import { generateProduct } from "./services/product.service";
+import { generateExpensiveComputationalFunc } from "./services/common.service";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -40,13 +41,9 @@ const App = () => {
     // setProducts(sortedData);
   };
 
-  const handleTotalPrice = useCallback(() => {
+  const handleTotalPrice = () => {
+    // generateExpensiveComputationalFunc();
     let sum = 0;
-    let random = 0;
-    // Introduce a deliberate delay
-    for (let i = 0; i <= 100000000; i++) {
-      random += Math.random();
-    }
     for (let i = 0; i <= products.length; i++) {
       if (products[i]) {
         const result = products[i].price + sum;
@@ -54,15 +51,10 @@ const App = () => {
       }
     }
     return sum;
-  }, [products]);
+  };
 
   const handleSortedProducts = () => {
-    // Simulate an expensive computation
-    let expensiveComputation = 0;
-    for (let i = 0; i < 100000000; i++) {
-      expensiveComputation += Math.random();
-    }
-
+    // generateExpensiveComputationalFunc();
     if (!sortOrder) return products;
     return [...products].sort((a, b) => {
       const nameA = a.name.toUpperCase();
@@ -77,11 +69,15 @@ const App = () => {
     });
   };
 
-  // const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
-  const sortedProducts = handleSortedProducts()
+  //----------------------------------------useMemo section--------------------------------------------------------------------
 
+  // const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
+  const sortedProducts = handleSortedProducts();
   // const totalPrice = useMemo(() =>handleTotalPrice(),[products])
   const totalPrice = handleTotalPrice();
+
+  //----------------------------------------End useMemo section-----------------------------------------------------------------
+
   const handleDeleteProduct = (id) => {
     //Delete when products over 10,000
     const removedProduct = products.filter((item) => item.id !== id);
