@@ -6,7 +6,10 @@ import SortingSection from "./child-components/SortingSection";
 import ShowTotalPrice from "./child-components/ShowTotalPrice";
 import Button from "./share-components/Button";
 import PurchaseHistoryLogs from "./child-components/PurchaseHistoryLogs";
-import { generateProduct, lightweightGenProduct } from "./services/product.service";
+import {
+  generateProduct,
+  lightweightGenProduct,
+} from "./services/product.service";
 import { generateExpensiveComputationalFunc } from "./services/common.service";
 
 const App = () => {
@@ -18,27 +21,16 @@ const App = () => {
   const [intervalId, setIntervalId] = useState(null);
   const [displayForm, setDisplayForm] = useState(false);
 
-  //-----------------SECTION Heavy computational functions-----------------
   const generateProducts = () => {
     const thisProducts = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 50000; i++) {
       thisProducts.push(lightweightGenProduct());
     }
     setDefaultProducts([...products, ...thisProducts]);
     setProducts([...products, ...thisProducts]);
-  }
+  };
   const handleSort = (type) => {
-    // const sortedData = [...products].sort((a, b) => {
-    //   const nameA = a.name.toUpperCase();
-    //   const nameB = b.name.toUpperCase();
-    //   if (type === "asc") {
-    //     return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-    //   } else {
-    //     return nameA > nameB ? -1 : nameA < nameB ? 1 : 0;
-    //   }
-    // })
     setSortOrder(type);
-    // setProducts(sortedData);
   };
 
   const handleTotalPrice = () => {
@@ -69,22 +61,14 @@ const App = () => {
     });
   };
 
-  //----------------------------------------useMemo section--------------------------------------------------------------------
 
-  // const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
-  // const sortedProducts = handleSortedProducts();
-  // const totalPrice = useMemo(() =>handleTotalPrice(),[products])
-  // const totalPrice = handleTotalPrice();
-
-  //----------------------------------------End useMemo section-----------------------------------------------------------------
-
-  const handleDeleteProduct = useCallback((id) => {
+  const handleDeleteProduct = (id) => {
     //Delete when products over 10,000
     const removedProduct = products.filter((item) => item.id !== id);
     setProducts(removedProduct);
-  },[products])
-  //----------------------------------------------------END----------------------------------------------------
-  //-----------------SECTION Light computational functions-----------------
+  };
+
+
   const handleAddProduct = (newProduct) => {
     setDefaultProducts([newProduct, ...products]);
     setProducts([newProduct, ...products]);
@@ -105,10 +89,8 @@ const App = () => {
     return products.length;
   };
 
-  // const totalProducts = useMemo(() => handleTotalProducts(),[products])
   const totalProducts = handleTotalProducts();
-  //----------------------------------------------------END----------------------------------------------------
-  //-----------------SECTION Frequent updates states-----------------
+
   const startGeneratingHistoryLogs = () => {
     const id = setInterval(() => {
       const newProduct = generateProduct();
@@ -120,7 +102,22 @@ const App = () => {
     clearInterval(intervalId);
     setIntervalId(null);
   };
-  //----------------------------------------------------END----------------------------------------------------
+  //----------------------------------------------------Test Section----------------------------------------------------
+
+  // test hypothesis 2 => prove negative effect of applying useMemo on lightweight function
+  const handleShowTotalDelete = () => {
+    return 'Helloworld';
+  };
+  // const numInstances = 50000000; // Adjust the number of instances as needed
+  // const instances = Array.from({ length: numInstances }, () => handleShowTotalDelete());
+
+  // const memoizedInstances = useMemo(() => {
+  //   return instances.map((instance) => instance);
+  // }, [instances]);
+  // const memoizedInstances = () => {
+  //   return instances.map((instance) => instance);
+  // };
+  
   return (
     <div className="app">
       <Menu />
