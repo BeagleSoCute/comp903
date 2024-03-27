@@ -2,11 +2,7 @@ import React, {useMemo} from "react";
 import DeleteProductButton from "../great-grandchild-components/DeleteProductButton";
 
 const ProductDetails = ({ details, onDelete }) => {
-  //   const memoizedInstances = () => {
-  //     const data = details
-  //   return 'hello world'
-  // }
-
+ 
 //   const memoizedInstances = () => {
 //     const data = details
 //   return 'hello world'
