@@ -8,7 +8,6 @@ import Button from "./share-components/Button";
 import PurchaseHistoryLogs from "./child-components/PurchaseHistoryLogs";
 import { generateProduct } from "./services/product.service";
 import { generateExpensiveComputationalFunc } from "./services/common.service";
-
 const App = () => {
   const [products, setProducts] = useState([]);
   const [defaultProduct, setDefaultProducts] = useState([]);
@@ -18,8 +17,7 @@ const App = () => {
   const [intervalId, setIntervalId] = useState(null);
   const [displayForm, setDisplayForm] = useState(false);
 
-  //-----------------SECTION Heavy computational functions-----------------
-  const generateProducts = useCallback(() => {
+const generateProducts = useCallback(() => {
     const thisProducts = [];
     for (let i = 0; i < 40000; i++) {
       thisProducts.push(generateProduct());
@@ -28,19 +26,9 @@ const App = () => {
     setProducts([...products, ...thisProducts]);
   }, [products]);
   const handleSort = (type) => {
-    // const sortedData = [...products].sort((a, b) => {
-    //   const nameA = a.name.toUpperCase();
-    //   const nameB = b.name.toUpperCase();
-    //   if (type === "asc") {
-    //     return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-    //   } else {
-    //     return nameA > nameB ? -1 : nameA < nameB ? 1 : 0;
-    //   }
-    // })
     setSortOrder(type);
     // setProducts(sortedData);
   };
-
   const handleTotalPrice = () => {
     // generateExpensiveComputationalFunc();
     let sum = 0;
@@ -52,7 +40,6 @@ const App = () => {
     }
     return sum;
   };
-
   const handleSortedProducts = () => {
     // generateExpensiveComputationalFunc();
     if (!sortOrder) return products;
@@ -68,23 +55,12 @@ const App = () => {
         : 1;
     });
   };
-
-  //----------------------------------------useMemo section--------------------------------------------------------------------
-
-  // const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
-  const sortedProducts = handleSortedProducts();
-  // const totalPrice = useMemo(() =>handleTotalPrice(),[products])
-  const totalPrice = handleTotalPrice();
-
-  //----------------------------------------End useMemo section-----------------------------------------------------------------
-
   const handleDeleteProduct = (id) => {
     //Delete when products over 10,000
     const removedProduct = products.filter((item) => item.id !== id);
     setProducts(removedProduct);
   };
-  //----------------------------------------------------END----------------------------------------------------
-  //-----------------SECTION Light computational functions-----------------
+
   const handleAddProduct = (newProduct) => {
     setDefaultProducts([newProduct, ...products]);
     setProducts([newProduct, ...products]);
@@ -101,8 +77,7 @@ const App = () => {
   const handleOpenForm = (value) => {
     setDisplayForm(value);
   };
-  //----------------------------------------------------END----------------------------------------------------
-  //-----------------SECTION Frequent updates states-----------------
+
   const startGeneratingHistoryLogs = () => {
     const id = setInterval(() => {
       const newProduct = generateProduct();
@@ -114,7 +89,15 @@ const App = () => {
     clearInterval(intervalId);
     setIntervalId(null);
   };
-  //----------------------------------------------------END----------------------------------------------------
+
+    //----------------------------------------Test first hypothesis-------------------------------------------------------------------
+
+  // const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
+  const sortedProducts = handleSortedProducts();
+  // const totalPrice = useMemo(() =>handleTotalPrice(),[products])
+  const totalPrice = handleTotalPrice();
+
+  //----------------------------------------End -----------------------------------------------------------------
   return (
     <div className="app">
       <Menu />
