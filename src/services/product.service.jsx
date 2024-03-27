@@ -76,3 +76,13 @@ export const generateProduct = () => {
     description: generateDescription(),
   };
 };
+
+
+export const lightweightGenProduct = () => {
+  return{
+    id: generateId(),
+    name: 'p',
+    price: 1,
+    description: 'd1',
+  }
+}

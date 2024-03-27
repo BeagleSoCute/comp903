@@ -6,7 +6,7 @@ import SortingSection from "./child-components/SortingSection";
 import ShowTotalPrice from "./child-components/ShowTotalPrice";
 import Button from "./share-components/Button";
 import PurchaseHistoryLogs from "./child-components/PurchaseHistoryLogs";
-import { generateProduct } from "./services/product.service";
+import { generateProduct, lightweightGenProduct } from "./services/product.service";
 import { generateExpensiveComputationalFunc } from "./services/common.service";
 
 const App = () => {
@@ -19,14 +19,14 @@ const App = () => {
   const [displayForm, setDisplayForm] = useState(false);
 
   //-----------------SECTION Heavy computational functions-----------------
-  const generateProducts = useCallback(() => {
+  const generateProducts = () => {
     const thisProducts = [];
-    for (let i = 0; i < 40000; i++) {
-      thisProducts.push(generateProduct());
+    for (let i = 0; i < 10; i++) {
+      thisProducts.push(lightweightGenProduct());
     }
     setDefaultProducts([...products, ...thisProducts]);
     setProducts([...products, ...thisProducts]);
-  }, [products]);
+  }
   const handleSort = (type) => {
     // const sortedData = [...products].sort((a, b) => {
     //   const nameA = a.name.toUpperCase();
@@ -72,17 +72,17 @@ const App = () => {
   //----------------------------------------useMemo section--------------------------------------------------------------------
 
   // const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
-  const sortedProducts = handleSortedProducts();
+  // const sortedProducts = handleSortedProducts();
   // const totalPrice = useMemo(() =>handleTotalPrice(),[products])
-  const totalPrice = handleTotalPrice();
+  // const totalPrice = handleTotalPrice();
 
   //----------------------------------------End useMemo section-----------------------------------------------------------------
 
-  const handleDeleteProduct = (id) => {
+  const handleDeleteProduct = useCallback((id) => {
     //Delete when products over 10,000
     const removedProduct = products.filter((item) => item.id !== id);
     setProducts(removedProduct);
-  };
+  },[products])
   //----------------------------------------------------END----------------------------------------------------
   //-----------------SECTION Light computational functions-----------------
   const handleAddProduct = (newProduct) => {
@@ -101,6 +101,12 @@ const App = () => {
   const handleOpenForm = (value) => {
     setDisplayForm(value);
   };
+  const handleTotalProducts = () => {
+    return products.length;
+  };
+
+  // const totalProducts = useMemo(() => handleTotalProducts(),[products])
+  const totalProducts = handleTotalProducts();
   //----------------------------------------------------END----------------------------------------------------
   //-----------------SECTION Frequent updates states-----------------
   const startGeneratingHistoryLogs = () => {
@@ -136,8 +142,8 @@ const App = () => {
                   onChange={handleSort}
                   onClear={handleClearSort}
                 />
-                <p>The number of products: {products.length}</p>
-                <ShowTotalPrice totalPrice={totalPrice} />
+                <p>The number of products: {totalProducts}</p>
+                {/* <ShowTotalPrice totalPrice={totalPrice} /> */}
               </div>
               <AddingProductSection
                 displayForm={displayForm}
@@ -146,7 +152,8 @@ const App = () => {
                 onDisplayForm={handleOpenForm}
               />
               <ProductLists
-                products={sortedProducts}
+                // products={sortedProducts}
+                products={products}
                 onDelete={handleDeleteProduct}
                 onDeleteAll={handleDeleteAllProduct}
               />

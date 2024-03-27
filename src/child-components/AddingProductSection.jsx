@@ -24,7 +24,7 @@ const AddingProductSection = ({ displayForm, onAdd, onRandomAdd,onDisplayForm })
                 Add Product
               </Button>
               <Button onClick={() => onRandomAdd()} className="p-2">
-                Generate 10,000 products
+                Generate products
               </Button>
             </>
           )}
