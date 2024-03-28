@@ -12,7 +12,7 @@ const ProductDetails = ({ details, onDelete }) => {
   return (
     <div className="product-details">
       <div className="flex gap-10 items-center">
-        {test}
+        {/* {test} */}
         <span>Product ID:</span>
         {details.id}
         <span>Name:</span>

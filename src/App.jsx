@@ -23,7 +23,7 @@ const App = () => {
 
   const generateProducts = () => {
     const thisProducts = [];
-    for (let i = 0; i < 50000; i++) {
+    for (let i = 0; i < 10; i++) {
       thisProducts.push(lightweightGenProduct());
     }
     setDefaultProducts([...products, ...thisProducts]);
@@ -108,9 +108,10 @@ const App = () => {
   const handleShowTotalDelete = () => {
     return 'Helloworld';
   };
-  // const numInstances = 50000000; // Adjust the number of instances as needed
-  // const instances = Array.from({ length: numInstances }, () => handleShowTotalDelete());
-
+  //50000000
+  const numInstances = 10; // Adjust the number of instances as needed
+  const instances = Array.from({ length: numInstances }, () => handleShowTotalDelete());
+console.log('instances',instances)
   // const memoizedInstances = useMemo(() => {
   //   return instances.map((instance) => instance);
   // }, [instances]);
