@@ -6,7 +6,7 @@ import SortingSection from "./child-components/SortingSection";
 import ShowTotalPrice from "./child-components/ShowTotalPrice";
 import Button from "./share-components/Button";
 import PurchaseHistoryLogs from "./child-components/PurchaseHistoryLogs";
-import { generateProduct } from "./services/product.service";
+import { generateProduct, lightweightGenProduct } from "./services/product.service";
 import { generateExpensiveComputationalFunc } from "./services/common.service";
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
   const generateProducts = useCallback(() => {
     const thisProducts = [];
     for (let i = 0; i < 40000; i++) {
-      thisProducts.push(generateProduct());
+      thisProducts.push(lightweightGenProduct());
     }
     setDefaultProducts([...products, ...thisProducts]);
     setProducts([...products, ...thisProducts]);
@@ -90,11 +90,10 @@ const App = () => {
   };
 
  //-----------------Test third hypothesis----------------------------------------------------------------------
-  const handleDeleteProduct = (id) => {
-    //Delete when products over 10,000
+  const handleDeleteProduct = useCallback((id) => {
     const removedProduct = products.filter((item) => item.id !== id);
     setProducts(removedProduct);
-  };
+  },[products])
   return (
     <div className="app">
       <Menu />
