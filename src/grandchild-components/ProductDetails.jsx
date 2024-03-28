@@ -17,4 +17,4 @@ const ProductDetails = ({ details, onDelete }) => {
   );
 };
 
-export default ProductDetails;
+export default React.memo(ProductDetails);
