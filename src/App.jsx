@@ -20,7 +20,7 @@ const App = () => {
 
   const generateProducts = useCallback(() => {
     const thisProducts = [];
-    for (let i = 0; i < 40000; i++) {
+    for (let i = 0; i < 80000; i++) {
       thisProducts.push(lightweightGenProduct());
     }
     setDefaultProducts([...products, ...thisProducts]);
@@ -88,12 +88,16 @@ const App = () => {
     clearInterval(intervalId);
     setIntervalId(null);
   };
-
- //-----------------Test third hypothesis----------------------------------------------------------------------
   const handleDeleteProduct = useCallback((id) => {
     const removedProduct = products.filter((item) => item.id !== id);
     setProducts(removedProduct);
   },[products])
+
+ //-----------------Test third hypothesis---------------------------------------------------------------------- 
+  // const handleShowMessage = useCallback((id) => {
+  //   console.log('handleShowMessage',setSortOrder)
+  // },[sortOrder])
+
   return (
     <div className="app">
       <Menu />
@@ -128,6 +132,8 @@ const App = () => {
                 products={sortedProducts}
                 onDelete={handleDeleteProduct}
                 onDeleteAll={handleDeleteAllProduct}
+                // onShowMessage={handleShowMessage}
+                // onShowMessage={() => {}}
               />
             </>
           ) : (
