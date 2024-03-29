@@ -61,13 +61,11 @@ const App = () => {
     });
   };
 
-
   const handleDeleteProduct = (id) => {
     //Delete when products over 10,000
     const removedProduct = products.filter((item) => item.id !== id);
     setProducts(removedProduct);
   };
-
 
   const handleAddProduct = (newProduct) => {
     setDefaultProducts([newProduct, ...products]);
@@ -106,19 +104,21 @@ const App = () => {
 
   // test hypothesis 2 => prove negative effect of applying useMemo on lightweight function
   const handleShowTotalDelete = () => {
-    return 'Helloworld';
+    return "Helloworld";
   };
   //50000000
-  const numInstances = 10; // Adjust the number of instances as needed
-  const instances = Array.from({ length: numInstances }, () => handleShowTotalDelete());
-console.log('instances',instances)
-  // const memoizedInstances = useMemo(() => {
-  //   return instances.map((instance) => instance);
-  // }, [instances]);
+  const numInstances = 5000000; // Adjust the number of instances as needed
+  const instances = Array.from({ length: numInstances }, () =>
+    handleShowTotalDelete()
+  );
+  console.log("instances", instances);
+  const memoizedInstances = useMemo(() => {
+    return instances.map((instance) => instance);
+  }, [instances]);
   // const memoizedInstances = () => {
   //   return instances.map((instance) => instance);
   // };
-  
+
   return (
     <div className="app">
       <Menu />
