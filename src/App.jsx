@@ -13,7 +13,7 @@ import {
 import { generateExpensiveComputationalFunc } from "./services/common.service";
 
 // Child Component
-const ChildComponent = React.memo(({onClick }) => {
+const ChildComponent = React.memo(({ onClick }) => {
   // const handleOnClick = () => {
   //   onClick((pre) => pre+1);
   // }
@@ -27,9 +27,9 @@ const App = () => {
 
   // Define callback function within Parent Component
   const handleClick = useCallback(() => {
-    setCount((pre) => pre+1);
+    setCount((pre) => pre + 1);
     // console.log('count call')
-  }, []);
+  }, [count]);
 
   console.log("Parent Component Rendered");
 
@@ -38,11 +38,12 @@ const App = () => {
       <h1>Parent Component</h1>
       <p>Count: {count}</p>
       {/* Render multiple Child Components */}
-      {[...Array(10000)].map((_, index) => (
-        <ChildComponent key={index} 
-        // onClick={setCount}
-        onClick={handleClick}
-         />
+      {[...Array(50000)].map((_, index) => (
+        <ChildComponent
+          key={index}
+          // onClick={setCount}
+          onClick={handleClick}
+        />
       ))}
     </div>
   );
