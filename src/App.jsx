@@ -107,14 +107,18 @@ const App = () => {
     return "Helloworld";
   };
   //50000000
-  const numInstances = 5000000; // Adjust the number of instances as needed
+  const numInstances = 50000000; // Adjust the number of instances as needed
   const instances = Array.from({ length: numInstances }, () =>
     handleShowTotalDelete()
   );
-  console.log("instances", instances);
+  // console.log("instances", instances);
+
+const test =''
+
   const memoizedInstances = useMemo(() => {
     return instances.map((instance) => instance);
-  }, [instances]);
+  }, [test]);
+
   // const memoizedInstances = () => {
   //   return instances.map((instance) => instance);
   // };
