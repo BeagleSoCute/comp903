@@ -17,14 +17,14 @@ const App = () => {
   const [intervalId, setIntervalId] = useState(null);
   const [displayForm, setDisplayForm] = useState(false);
 
-const generateProducts = useCallback(() => {
+const generateProducts = () => {
     const thisProducts = [];
-    for (let i = 0; i < 40000; i++) {
+    for (let i = 0; i < 1000; i++) {
       thisProducts.push(generateProduct());
     }
     setDefaultProducts([...products, ...thisProducts]);
     setProducts([...products, ...thisProducts]);
-  }, [products]);
+  };
   const handleSort = (type) => {
     setSortOrder(type);
     // setProducts(sortedData);
@@ -41,7 +41,7 @@ const generateProducts = useCallback(() => {
     return sum;
   };
   const handleSortedProducts = () => {
-    // generateExpensiveComputationalFunc();
+    generateExpensiveComputationalFunc();
     if (!sortOrder) return products;
     return [...products].sort((a, b) => {
       const nameA = a.name.toUpperCase();
@@ -56,7 +56,6 @@ const generateProducts = useCallback(() => {
     });
   };
   const handleDeleteProduct = (id) => {
-    //Delete when products over 10,000
     const removedProduct = products.filter((item) => item.id !== id);
     setProducts(removedProduct);
   };
@@ -92,8 +91,8 @@ const generateProducts = useCallback(() => {
 
     //----------------------------------------Test first hypothesis-------------------------------------------------------------------
 
-  // const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
-  const sortedProducts = handleSortedProducts();
+  const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
+  // const sortedProducts = handleSortedProducts();
   // const totalPrice = useMemo(() =>handleTotalPrice(),[products])
   const totalPrice = handleTotalPrice();
 

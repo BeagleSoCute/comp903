@@ -10,6 +10,8 @@ function onRender(id, phase, actualDuration, baseDuration, startTime, commitTime
   console.log('baseDuration',baseDuration)
   console.log('actualDuration',actualDuration)
   console.log('-----------------------------------')
+
+  console.table([{phase, baseDuration, actualDuration}])
 }
 root.render(
   <React.StrictMode>
