@@ -1,12 +1,13 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useState } from "react";
 import DeleteProductButton from "../great-grandchild-components/DeleteProductButton";
-
-const ProductDetails = ({ details, onDelete }) => {
-  const handleShowDiscount = () => {
-    return details.price - 20;
+import Button from "../share-components/Button"
+const ProductDetails = ({ details,
+  //  handleChangePrice
+    }) => {
+  const [price, setIncreasePrice] = useState(details.price);
+  const handleChangePrice = () => {
+    setIncreasePrice((pre) => pre + 1);
   };
-  // const discount =  useMemo(() => handleShowDiscount(),[details]) 
-  const discount = handleShowDiscount();
   return (
     <div className="product-details">
       <div className="flex gap-10 items-center">
@@ -15,13 +16,12 @@ const ProductDetails = ({ details, onDelete }) => {
         <span>Name:</span>
         {details.name} <span> Description:</span>
         {details.description} <span>Price:</span>
-        {details.price}
-        <span>Discount</span>
-        {discount}
-        <DeleteProductButton onDelete={() => onDelete(details.id)} />
+        {price}
+        <Button onClick={handleChangePrice} >Increase price</Button>
+        {/* <DeleteProductButton onDelete={() => onDelete(details.id)} /> */}
       </div>
     </div>
   );
 };
 
-export default ProductDetails;
+export default React.memo(ProductDetails);

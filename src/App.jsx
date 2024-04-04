@@ -89,13 +89,17 @@ const generateProducts = () => {
     setIntervalId(null);
   };
 
-    //----------------------------------------Test first hypothesis-------------------------------------------------------------------
 
   const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
   // const sortedProducts = handleSortedProducts();
   // const totalPrice = useMemo(() =>handleTotalPrice(),[products])
   const totalPrice = handleTotalPrice();
+    //----------------------------------------Test third hypothesis-------------------------------------------------------------------
 
+
+//  const handleChangePrice = useCallback((setIncreasePrice) => {
+//       setIncreasePrice((pre) => pre + 1);
+//  },[])
   //----------------------------------------End -----------------------------------------------------------------
   return (
     <div className="app">
@@ -131,6 +135,7 @@ const generateProducts = () => {
                 products={sortedProducts}
                 onDelete={handleDeleteProduct}
                 onDeleteAll={handleDeleteAllProduct}
+                // handleChangePrice={handleChangePrice}
               />
             </>
           ) : (
