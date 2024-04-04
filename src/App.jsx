@@ -19,7 +19,7 @@ const App = () => {
 
 const generateProducts = () => {
     const thisProducts = [];
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 10000; i++) {
       thisProducts.push(generateProduct());
     }
     setDefaultProducts([...products, ...thisProducts]);

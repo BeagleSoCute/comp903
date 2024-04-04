@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useMemo } from "react";
 import DeleteProductButton from "../great-grandchild-components/DeleteProductButton";
 
 const ProductDetails = ({ details, onDelete }) => {
+  const handleShowDiscount = () => {
+    return details.price - 20;
+  };
+  // const discount =  useMemo(() => handleShowDiscount(),[details]) 
+  const discount = handleShowDiscount();
   return (
     <div className="product-details">
       <div className="flex gap-10 items-center">
@@ -11,7 +16,9 @@ const ProductDetails = ({ details, onDelete }) => {
         {details.name} <span> Description:</span>
         {details.description} <span>Price:</span>
         {details.price}
-        <DeleteProductButton  onDelete={() => onDelete(details.id)}/>
+        <span>Discount</span>
+        {discount}
+        <DeleteProductButton onDelete={() => onDelete(details.id)} />
       </div>
     </div>
   );
