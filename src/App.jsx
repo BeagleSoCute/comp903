@@ -107,7 +107,7 @@ const App = () => {
     return "Helloworld";
   };
   //50000000
-  const numInstances = 50000000; // Adjust the number of instances as needed
+  const numInstances = 5000000; // Adjust the number of instances as needed
   const instances = Array.from({ length: numInstances }, () =>
     handleShowTotalDelete()
   );
@@ -115,10 +115,16 @@ const App = () => {
 
 const test =''
 
-  const memoizedInstances = useMemo(() => {
-    return instances.map((instance) => instance);
-  }, [test]);
+  // const memoizedInstances = useMemo(() => {
+  //   return instances.map((instance) => instance);
+  // }, []);
 
+  const memoizedInstances = useCallback(() => {
+    return instances.map((instance) => instance);
+  },[instances])
+
+  const testResult = memoizedInstances();
+  console.log('testResult',testResult)
   // const memoizedInstances = () => {
   //   return instances.map((instance) => instance);
   // };
