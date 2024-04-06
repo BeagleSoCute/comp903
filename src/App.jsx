@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import Menu from "./child-components/Menu";
 import ProductLists from "./child-components/ProductLists";
 import AddingProductSection from "./child-components/AddingProductSection";
@@ -16,8 +16,14 @@ const App = () => {
   const [historyLogs, setHistoryLogs] = useState([]);
   const [intervalId, setIntervalId] = useState(null);
   const [displayForm, setDisplayForm] = useState(false);
-
-const generateProducts = () => {
+  useEffect(() => {
+    const thisProducts = [];
+    for (let i = 0; i < 10000; i++) {
+      thisProducts.push(generateProduct());
+      setProducts([...products, ...thisProducts]);
+    }
+  }, []);
+  const generateProducts = () => {
     const thisProducts = [];
     for (let i = 0; i < 10000; i++) {
       thisProducts.push(generateProduct());
@@ -89,17 +95,15 @@ const generateProducts = () => {
     setIntervalId(null);
   };
 
-
   const sortedProducts = useMemo(() => handleSortedProducts(), [products]);
   // const sortedProducts = handleSortedProducts();
   // const totalPrice = useMemo(() =>handleTotalPrice(),[products])
   const totalPrice = handleTotalPrice();
-    //----------------------------------------Test third hypothesis-------------------------------------------------------------------
+  //----------------------------------------Test third hypothesis-------------------------------------------------------------------
 
-
-//  const handleChangePrice = useCallback((setIncreasePrice) => {
-//       setIncreasePrice((pre) => pre + 1);
-//  },[])
+   const handleChangePrice = useCallback((setIncreasePrice) => {
+        setIncreasePrice((pre) => pre + 1);
+   },[])
   //----------------------------------------End -----------------------------------------------------------------
   return (
     <div className="app">
@@ -135,7 +139,7 @@ const generateProducts = () => {
                 products={sortedProducts}
                 onDelete={handleDeleteProduct}
                 onDeleteAll={handleDeleteAllProduct}
-                // handleChangePrice={handleChangePrice}
+                handleChangePrice={handleChangePrice}
               />
             </>
           ) : (

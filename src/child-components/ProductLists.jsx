@@ -3,7 +3,7 @@ import ProductDetails from "../grandchild-components/ProductDetails";
 import DeleteAllProductButton from "../grandchild-components/DeleteAllProductButton";
 
 const ProductList = ({ products, onDelete, onDeleteAll, 
-  // handleChangePrice 
+  handleChangePrice 
 }) => {
   return (
     <div className="product-lists border-solid border-4 border-gray-700 px-32 py-5  ">
@@ -16,7 +16,7 @@ const ProductList = ({ products, onDelete, onDeleteAll,
         return (
           <div key={index} className="my-5">
             <ProductDetails details={item}  
-            // handleChangePrice={handleChangePrice} 
+            handleChangePrice={handleChangePrice} 
             
             />
           </div>

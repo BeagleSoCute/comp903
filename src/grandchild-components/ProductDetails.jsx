@@ -2,12 +2,12 @@ import React, { useCallback, useState } from "react";
 import DeleteProductButton from "../great-grandchild-components/DeleteProductButton";
 import Button from "../share-components/Button"
 const ProductDetails = ({ details,
-  //  handleChangePrice
+   handleChangePrice
     }) => {
   const [price, setIncreasePrice] = useState(details.price);
-  const handleChangePrice = () => {
-    setIncreasePrice((pre) => pre + 1);
-  };
+  // const handleChangePrice = () => {
+  //   setIncreasePrice((pre) => pre + 1);
+  // };
   return (
     <div className="product-details">
       <div className="flex gap-10 items-center">
