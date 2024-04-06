@@ -115,16 +115,15 @@ const App = () => {
 
 const test =''
 
-  // const memoizedInstances = useMemo(() => {
-  //   return instances.map((instance) => instance);
-  // }, []);
-
-  const memoizedInstances = useCallback(() => {
+  const memoizedInstances = useMemo(() => {
     return instances.map((instance) => instance);
-  },[instances])
+  }, [instances]);
 
-  const testResult = memoizedInstances();
-  console.log('testResult',testResult)
+  // const memoizedInstances = useCallback(() => {
+  //   return instances.map((instance) => instance);
+  // },[instances])
+
+  const testResult = memoizedInstances;
   // const memoizedInstances = () => {
   //   return instances.map((instance) => instance);
   // };
