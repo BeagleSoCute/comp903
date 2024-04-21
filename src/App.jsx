@@ -101,9 +101,10 @@ const App = () => {
   const totalPrice = handleTotalPrice();
   //----------------------------------------Test third hypothesis-------------------------------------------------------------------
 
-   const handleChangePrice = useCallback((setIncreasePrice) => {
-        setIncreasePrice((pre) => pre + 1);
-   },[])
+  // this scenario 2 when applying useCallback to this function and will pass it to child component (ProductDetails)
+  const handleChangePrice = useCallback((setIncreasePrice) => {
+    setIncreasePrice((pre) => pre + 1);
+  }, []);
   //----------------------------------------End -----------------------------------------------------------------
   return (
     <div className="app">

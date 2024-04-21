@@ -5,6 +5,7 @@ const ProductDetails = ({ details,
    handleChangePrice
     }) => {
   const [price, setIncreasePrice] = useState(details.price);
+  //This function is for scenario 1 on the third hypothesis
   // const handleChangePrice = () => {
   //   setIncreasePrice((pre) => pre + 1);
   // };
