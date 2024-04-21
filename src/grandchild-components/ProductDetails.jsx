@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import DeleteProductButton from "../great-grandchild-components/DeleteProductButton";
 
 const ProductDetails = ({ details, onDelete }) => {
+  //test second hypothesis here
   const handleShowDiscount = () => {
     return details.price - 20;
   };
